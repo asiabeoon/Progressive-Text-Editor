@@ -1,5 +1,5 @@
 import { openDB } from 'idb';
-import editor from './editor';
+// import editor from './editor';
 
 const initdb = async () =>
   openDB('jate', 1, {
@@ -21,24 +21,23 @@ export const putDb = async (content) => {
   const store = tx.objectStore('jate')
   const request = store.put({id: 1, value: content})
   const result = await request
-  console.log(result.valueOf)
+  console.log(result.value)
 }
-
-
 
 // TODO: Add logic for a method that gets all the content from the database
 export const getDb = async () => {
-  console.log('Get from database')
-  const jateDb = await openDB('jate', 1)
-  const tx = jateDb.transaction('jate', 'readonly')
-  const store = tx.objectStore('jate')
-  const request = store.get(1)
-  const result = await request
-  result
-  ? console.log('data retrieved from database', result.value)
-  : console.log('data not found')
-  return result?.value
+  console.log('Get from database');
+  const jateDb = await openDB('jate', 1);
+  const tx = jateDb.transaction('jate', 'readonly');
+  const store = tx.objectStore('jate');
+  const request = store.get(1);
+  const result = await request;
+  
+  console.log('result.value', result.value);
+  
+  // editor.content(result.value); // Set the content in the editor
+  
+  return result?.value;
 }
-
 
 initdb();
